@@ -1,0 +1,66 @@
+6
+..#_.#.
+.#._#.#
+.##_###
+#.#_#..
+.##_###
+##._...
+6
+2 right window
+3 left aisle
+2 right aisle
+1 right aisle
+3 left window
+2 right window6
+..#_.#.
+.#._#.#
+.##_###
+#.#_#..
+.##_###
+##._...
+6
+2 right window
+3 left aisle
+2 right aisle
+1 right aisle
+3 left window
+2 right window6
+..#_.#.
+.#._#.#
+.##_###
+#.#_#..
+.##_###
+##._...
+6
+2 right window
+3 left aisle
+2 right aisle
+1 right aisle
+3 left window
+2 right window6
+..#_.#.
+.#._#.#
+.##_###
+#.#_#..
+.##_###
+##._...
+6
+2 right window
+3 left aisle
+2 right aisle
+1 right aisle
+3 left window
+2 right window6
+..#_.#.
+.#._#.#
+.##_###
+#.#_#..
+.##_###
+##._...
+6
+2 right window
+3 left aisle
+2 right aisle
+1 right aisle
+3 left window
+2 right window6

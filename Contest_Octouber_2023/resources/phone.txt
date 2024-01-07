@@ -1,0 +1,5 @@
+/fakePath?phone_number=89820000000
+/validatePhoneNumber?fake_parameter=89820000000
+/validatePhoneNumber?phone_number=80000000000
+/validatePhoneNumber?phone_number=89820000000
+/validatePhoneNumber?phone_number=%2B7+%28982%29+123-1234

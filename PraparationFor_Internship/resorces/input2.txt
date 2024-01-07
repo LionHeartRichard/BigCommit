@@ -1,0 +1,19 @@
+5
+..._...
+..._...
+..._...
+..._...
+..._...
+12
+1 right aisle
+1 right window
+1 left window
+1 left aisle
+2 left aisle
+2 right aisle
+2 left window
+2 right window
+3 left aisle
+3 right aisle
+3 left window
+3 right window
