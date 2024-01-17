@@ -1,4 +1,4 @@
-package com.tasks.isaev;
+package com.tasks.isaev.search;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

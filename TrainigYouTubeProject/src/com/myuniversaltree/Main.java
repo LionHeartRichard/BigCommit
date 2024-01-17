@@ -4,66 +4,76 @@ import java.util.*;
 
 public class Main {
 
-	static class Data {
-		int id;
-		String name;
-		int parentId;
-
-		Data(int id, String name, int parentId) {
-			this.id = id;
-			this.name = name;
-			this.parentId = parentId;
-		}
-
-		@Override
-		public String toString() {
-			return name;
-		}
-	}
-
-	static class DataNode extends TreeNode<Data, DataNode> {
-
-		@Override
-		public String toString() {
-			return vertex.name;
-		}
-
-	}
-
 	public static void main(String[] args) {
-		List<Data> items = new ArrayList<>();
 
-		items.add(new Data(1, "Соки", 0));
-		items.add(new Data(2, "Манго", 1));
-		items.add(new Data(3, "Виноградный", 1));
-		items.add(new Data(4, "Яблочный", 1));
-		items.add(new Data(5, "Газировка", 0));
-		items.add(new Data(6, "Кола", 5));
-		items.add(new Data(7, "Кола 0.5л", 6));
-		items.add(new Data(8, "Кола 1.5л", 6));
-		items.add(new Data(9, "Минералка", 5));
-		items.add(new Data(10, "Лимонад", 5));
+		Graph<String> graph = new Graph<String>();
 
-		DataNode tree = DataNode.makeTree(items, new TreeNode.TypeAdapter<Data, DataNode>() {
+		graph.addEdge("Соки", "Манго", true);
+		graph.addEdge("Соки", "Виноградный", true);
+		graph.addEdge("Соки", "Яблочный", true);
 
-			@Override
-			public DataNode newInstance() {
-				return new DataNode();
-			}
+		graph.addEdge("Газировка", "Кола", true);
+		graph.addEdge("Газировка", "Минералка", true);
+		graph.addEdge("Газировка", "Лимонад", true);
 
-			@Override
-			public boolean isSubVertex(Data source, Data vertex) {
-				return source.id == vertex.parentId;
-			}
+		graph.addEdge("Кола", "Кола-оригинальная", true);
+		graph.addEdge("Кола", "Кола-классическая", true);
+		graph.addEdge("Кола", "Кола-диетическая", true);
 
-			@Override
-			public boolean isTopLevel(Data vertex) {
-				return vertex.id == 0;
-			}
+		List<String> adjecent = graph.BFS("Газировка");
+		adjecent.forEach(s -> System.out.print(s + ", "));
 
-		});
+		adjecent.clear();
+		System.out.println();
 
-		System.out.println("@@@@@@@@@@@@@@@");
-		System.out.println(tree.toString());
+		adjecent = graph.DFS("Газировка");
+		adjecent.forEach(s -> System.out.print(s + ", "));
+		System.out.println();
+
+		int numberVertex = 20;
+		WeighGraph<String> graphStr = new WeighGraph<String>(numberVertex);
+		graphStr.addEdge("A", "B", 4);
+		graphStr.addEdge("A", "C", 5);
+		graphStr.addEdge("B", "D", 9);
+		graphStr.addEdge("C", "E", 3);
+		graphStr.addEdge("B", "E", 7);
+		graphStr.addEdge("D", "F", 2);
+		graphStr.addEdge("D", "E", 13);
+		graphStr.addEdge("E", "F", 6);
+//--------------------------------------------------------------------
+		graphStr.addEdge("A0", "B1", 8);
+		graphStr.addEdge("A0", "C1", 4);
+		graphStr.addEdge("A0", "A1", 3);
+		graphStr.addEdge("A1", "F2", 4);
+		graphStr.addEdge("A1", "D3", 80);
+
+		graphStr.addEdge("B1", "A2", 17);
+		graphStr.addEdge("B1", "B2", 4);
+		graphStr.addEdge("B1", "C2", 10);
+		graphStr.addEdge("C2", "A3", 4);
+		graphStr.addEdge("C2", "B3", 16);
+
+		graphStr.addEdge("D1", "A0", 5);
+		graphStr.addEdge("D1", "D2", 4);
+		graphStr.addEdge("D1", "F2", 13);
+		graphStr.addEdge("D2", "C3", 20);
+		graphStr.addEdge("D2", "D3", 10);
+
+		Map<String, Double> mapDistanceStr = graphStr.dijkstra("A");
+		mapDistanceStr.forEach((k, v) -> System.out.println("A to: " + k + " " + v));
+
+		System.out.println("------------------BFS-----------------------");
+		List<String> listBFS = graphStr.BFS("A0");
+		listBFS.forEach(i -> System.out.print(i + " "));
+		System.out.println();
+		System.out.println("------------------DFS-----------------------");
+		List<String> listDFS = graphStr.DFS("A0");
+		listDFS.forEach(i -> System.out.print(i + " "));
+
+		System.out.println();
+		System.out.println("------------------Graph 3-----------------------");
+		mapDistanceStr.clear();
+		mapDistanceStr = graphStr.dijkstra("A0");
+		mapDistanceStr.forEach((k, v) -> System.out.println("A0 to " + k + " " + v));
 	}
 }

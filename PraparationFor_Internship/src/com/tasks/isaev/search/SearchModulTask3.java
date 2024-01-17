@@ -1,4 +1,4 @@
-package com.tasks.isaev;
+package com.tasks.isaev.search;
 
 import java.util.*;
 import java.io.*;
