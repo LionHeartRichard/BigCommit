@@ -2,7 +2,7 @@ package io.mysuper.functionstil;
 
 import java.util.*;
 
-public class WeighedGraph<T> {
+public class WeightedGraph<T> {
 	private int numberVertex;
 	private Map<T, Integer> mapDistance = new HashMap<T, Integer>();
 	private Set<T> set = new HashSet<T>();
@@ -10,7 +10,7 @@ public class WeighedGraph<T> {
 	private Map<T, List<Node<T>>> mapNode = new HashMap<T, List<Node<T>>>();
 	private List<T> listDFS = new ArrayList<T>();
 
-	public WeighedGraph(int numberVertex) {
+	public WeightedGraph(int numberVertex) {
 		this.numberVertex = numberVertex;
 		this.pQue = new PriorityQueue<Node<T>>(numberVertex, new Node<T>());
 	}

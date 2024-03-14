@@ -47,14 +47,14 @@ public class Main {
 		adjacent.get(8).add(new Node<Integer>(6, 5));
 		adjacent.get(8).add(new Node<Integer>(7, 6));
 
-		WeighedGraph<Integer> graph = new WeighedGraph<Integer>(numberVertex);
+		WeightedGraph<Integer> graph = new WeightedGraph<Integer>(numberVertex);
 
 		Map<Integer, Integer> mapDistance = graph.dijkstra(adjacent, 0);
 		mapDistance.forEach((k, v) -> System.out.println("0 to " + k + " = " + v));
 
 		System.out.println("------------------Graph 2-----------------------");
 
-		WeighedGraph<String> graphStr = new WeighedGraph<String>(20);
+		WeightedGraph<String> graphStr = new WeightedGraph<String>(20);
 		graphStr.addEdge("A", "B", 4);
 		graphStr.addEdge("A", "C", 5);
 		graphStr.addEdge("B", "D", 9);

@@ -4,6 +4,7 @@ import java.util.*;
 
 public class MySuperFunctionClass {
 
+	//class Client for test functions
 	static class Client {
 		String name;
 		long money;

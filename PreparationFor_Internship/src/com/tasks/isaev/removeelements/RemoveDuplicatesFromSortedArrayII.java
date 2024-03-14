@@ -28,32 +28,13 @@ public class RemoveDuplicatesFromSortedArrayII {
 		if (nums.length == 0) {
 			return 0;
 		}
-		int partition = nums.length;
-		int pivot = 0;
-		int countRepetition = 0;
-		int i = 0, j = 1;
-
-		while (i < partition - 1 && j < partition) {
-			j = i + 1;
-			pivot = j;
-			while (j < partition && nums[i] == nums[j++]) {
-				++countRepetition;
+		int j = 2;
+		for (int i = 2; i < nums.length; ++i) {
+			if (nums[i] != nums[j - 2]) {
+				nums[j++] = nums[i];
 			}
-
-			if (countRepetition > 1) {
-				--j;
-				i = i + 2;
-				while (j < partition) {
-					nums[i++] = nums[j++];
-				}
-				partition = partition + 1 - countRepetition;
-				i = pivot;
-				j = 0;
-			}
-			countRepetition = 0;
-			++i;
 		}
-		return partition;
+		return j;
 	}
 
 	@Test

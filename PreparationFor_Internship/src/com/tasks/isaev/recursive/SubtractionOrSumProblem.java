@@ -1,5 +1,8 @@
 package com.tasks.isaev.recursive;
 
+import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
+
 //nums = 9, 3, 7
 //target = 13
 // +-
@@ -15,14 +18,7 @@ package com.tasks.isaev.recursive;
 
 public class SubtractionOrSumProblem {
 
-	public static void main(String[] args) {
-		int[] nums = { 9, 3, 7 };
-		int target = 13;
-
-		System.out.println(solve(nums, target));
-	}
-
-	private static boolean solve(int[] nums, int target) {
+	public static boolean solve(int[] nums, int target) {
 		if (nums.length == 0) {
 			return false;
 		}
@@ -47,7 +43,10 @@ public class SubtractionOrSumProblem {
 
 	// Space complexity - O(N)
 
-	// Unit TESTS
-	// 1==1
-	// -1+5=4
+	@Test
+	public void positiveTest1() {
+		int[] nums = { 9, 3, 7 };
+		int target = 13;
+		assertEquals(true, solve(nums, target));
+	}
 }

@@ -20,27 +20,13 @@ Return k.
 
 public class RemoveElement {
 	public int removeElement(int[] nums, int val) {
-		int partition = nums.length, i = 0, j = 0, pivot = 0, countRepetition = 0;
-
-		while (i < partition) {
-			pivot = i;
-			while (i < partition && nums[i] == val) {
-				++countRepetition;
-				++i;
+		int j = 0;
+		for (int i = 0; i < nums.length; ++i) {
+			if (nums[i] != val) {
+				nums[j++] = nums[i];
 			}
-			j = i;
-			i = pivot;
-			while ((j < partition) && countRepetition != 0) {
-				nums[i++] = nums[j++];
-			}
-			if (countRepetition != 0) {
-				i = pivot;
-				partition -= countRepetition;
-			}
-			countRepetition = 0;
-			++i;
 		}
-		return partition;
+		return j;
 	}
 
 	@Test
