@@ -1,4 +1,4 @@
-package com.tasks.isaev.sudoku;
+package com.tasks.isaev.recursive;
 
 import static org.junit.Assert.assertEquals;
 import java.util.*;
@@ -29,13 +29,13 @@ public class UniquePathForRobot {
 		row = grid.length;
 		col = grid[0].length;
 		cache = new int[row][col];
-		for (int i = 0; i < row; i++) {
+		for (int i = 0; i < row; ++i) {
 			Arrays.fill(cache[i], -1);
 		}
 		return recursive(0, 0, grid);
 	}
 
-	int recursive(int i, int j, int[][] grid) {
+	private int recursive(int i, int j, int[][] grid) {
 		if (!isValid(i, j, grid))
 			return 0;
 		if (i == row - 1 && j == col - 1)

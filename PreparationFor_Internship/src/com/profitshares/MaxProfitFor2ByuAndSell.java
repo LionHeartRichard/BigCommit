@@ -18,7 +18,7 @@ public class MaxProfitFor2ByuAndSell {
 		}
 		int byu1 = -prices[0], byu2 = -prices[0], sell1 = 0, sell2 = 0;
 		for (int i = 0; i < prices.length; ++i) {
-			byu1 = Math.max(byu1, -prices[1]);
+			byu1 = Math.max(byu1, -prices[i]);
 			sell1 = Math.max(sell1, byu1 + prices[i]);
 			byu2 = Math.max(byu2, sell1 - prices[i]);
 			sell2 = Math.max(sell2, byu2 + prices[i]);
