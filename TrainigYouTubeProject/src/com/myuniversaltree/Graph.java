@@ -1,6 +1,10 @@
 package com.myuniversaltree;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.*;
+
+import org.junit.jupiter.api.Test;
 
 public class Graph<T> {
 

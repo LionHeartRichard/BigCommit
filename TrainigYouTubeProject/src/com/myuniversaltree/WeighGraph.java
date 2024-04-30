@@ -110,12 +110,14 @@ public class WeighGraph<T> {
 				if (newDistance < mapDistance.get(currentNode.getNode())) {
 					mapDistance.put(currentNode.getNode(), newDistance);
 				}
-				pQue.add(new Node<T>(currentNode.getNode(), mapDistance.get(currentNode.getNode())));
+				pQue.add(new Node<T>(currentNode.getNode(),
+						mapDistance.get(currentNode.getNode())));
 			}
 		}
 	}
 
-	public Map<T, Double> dijkstra(Map<T, List<Node<T>>> adjacent, T sourceVertex) {
+	public Map<T, Double> dijkstra(Map<T, List<Node<T>>> adjacent,
+			T sourceVertex) {
 		clearAllStrictures();
 		mapNode = adjacent;
 		Iterator<T> item = DFS(sourceVertex).iterator();

@@ -18,13 +18,15 @@ public class SudokuArrBooleanTopSolution {
 			for (int j = 0; j < 9; ++j) {
 				char valueRow = board[i][j];
 				if (valueRow != '.') {
-					if (rows[valueRow - '1']) return false;
+					if (rows[valueRow - '1'])
+						return false;
 					rows[valueRow - '1'] = true;
 				}
 
 				char valueColumn = board[j][i];
 				if (valueColumn != '.') {
-					if (columns[valueColumn - '1']) return false;
+					if (columns[valueColumn - '1'])
+						return false;
 					columns[valueColumn - '1'] = true;
 				}
 
@@ -32,7 +34,8 @@ public class SudokuArrBooleanTopSolution {
 				int n = i % 3 * 3 + j % 3;
 				char valueBox = board[m][n];
 				if (valueBox != '.') {
-					if (box[valueBox - '1']) return false;
+					if (box[valueBox - '1'])
+						return false;
 					box[valueBox - '1'] = true;
 				}
 			}
@@ -69,11 +72,15 @@ public class SudokuArrBooleanTopSolution {
 
 	@Test
 	public void positiveTest1() {
-		char[][] board = { { '5', '3', '.', '.', '7', '.', '.', '.', '.' },
-				{ '6', '.', '.', '1', '9', '5', '.', '.', '.' }, { '.', '9', '8', '.', '.', '.', '.', '6', '.' },
-				{ '8', '.', '.', '.', '6', '.', '.', '.', '3' }, { '4', '.', '.', '8', '.', '3', '.', '.', '1' },
-				{ '7', '.', '.', '.', '2', '.', '.', '.', '6' }, { '.', '6', '.', '.', '.', '.', '2', '8', '.' },
-				{ '.', '.', '.', '4', '1', '9', '.', '.', '5' }, { '.', '.', '.', '.', '8', '.', '.', '7', '9' } };
+		char[][] board = {{'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+				{'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+				{'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+				{'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+				{'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+				{'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+				{'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+				{'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+				{'.', '.', '.', '.', '8', '.', '.', '7', '9'}};
 		boolean actual = isValidSudoku(board);
 		assertEquals(true, actual);
 	}
@@ -84,11 +91,11 @@ public class SudokuArrBooleanTopSolution {
 
 		char[][] arr = converterStrSudokuInArrChars(str);
 		for (int i = 0; i < 9; ++i) {
-			String row = "";
+			String row = "{";
 			for (int j = 0; j < 9; ++j) {
-				row += arr[i][j] + " ";
+				row += "'" + arr[i][j] + "', ";
 			}
-			System.out.println(row);
+			System.out.println(row + "},");
 		}
 		boolean actual = isValidSudoku(arr);
 		assertEquals(false, actual);

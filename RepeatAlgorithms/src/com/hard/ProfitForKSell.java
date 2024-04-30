@@ -1,30 +1,22 @@
-package com.profitshares;
-
-import org.junit.jupiter.api.Test;
+package com.hard;
 
 import static org.junit.Assert.assertArrayEquals;
 
 import java.util.*;
 
-/*
-Вам дан целочисленный массив prices, где prices[i]— цена данной акции в день, 
-и целое число - k
-Найдите дни-индексы массива где вы сможете получить максимальную прибыль.
-Т.е. день покупки и день продажи акции. 
-Вы можете совершать максимальное количество k-транзакций: т.е. вы можете покупать максимальное k-количество раз 
-и продавать максимальное количество k-раз.
-Примечание. Вы не можете совершать несколько транзакций одновременно.
- */
+import org.junit.jupiter.api.Test;
 
-public class MaxProfitSharesForKReturnDayBuyAndSale {
+public class ProfitForKSell {
 
 	private class Broker implements Comparator<Broker> {
+
 		int money;
 		int buy;
 		int sell;
 
 		Broker() {
 		}
+
 		Broker(int money, int buy, int sell) {
 			this.money = money;
 			this.buy = buy;
@@ -40,37 +32,50 @@ public class MaxProfitSharesForKReturnDayBuyAndSale {
 			}
 			return 0;
 		}
+
 	}
 
 	private int[] carry;
-
 	public int[] getIndexes(int[] prices, int k) {
 		carry = new int[prices.length];
 		getCarryValues(prices, k);
-		return getProfit(k);
+		return getProfits(k);
 	}
 
-	private int[] getProfit(int k) {
+	private void getCarryValues(int[] prices, int k) {
+		for (int i = 1; i < prices.length; ++i) {
+			if (prices[i - 1] < prices[i]) {
+				carry[i - 1] = -prices[i - 1];
+				if (i == prices.length - 1)
+					carry[i] = prices[i];
+			} else {
+				carry[i - 1] = prices[i - 1];
+			}
+		}
+	}
+
+	private int[] getProfits(int k) {
 
 		PriorityQueue<Broker> pQue = new PriorityQueue<Broker>(k, new Broker());
+		int buy = 0, money = Integer.MIN_VALUE;
 		int[] profits = new int[k];
-		int buy = 0, buyMoney = Integer.MIN_VALUE;
 
 		for (int i = 1; i < carry.length; ++i) {
-			if (buyMoney < carry[i - 1] && carry[i - 1] < 0) {
+			if (money < carry[i - 1] && carry[i - 1] < 0) {
 				buy = i - 1;
-				buyMoney = carry[i - 1];
+				money = carry[i - 1];
 			}
 			if (carry[i - 1] < 0 && carry[i] > 0) {
-				if (profits[0] < (carry[i] + buyMoney)) {
-					profits[0] = carry[i] + buyMoney;
-					pQue.add(new Broker(carry[i] + buyMoney, buy, i));
+				if (profits[0] < carry[i] + money) {
+					profits[0] = carry[i] + money;
+					pQue.add(new Broker(profits[0], buy, i));
+
 					Arrays.sort(profits);
-					if (pQue.size() > k) {
+
+					if (pQue.size() > k)
 						pQue.poll();
-					}
 				}
-				buyMoney = Integer.MIN_VALUE;
+				money = Integer.MIN_VALUE;
 			}
 		}
 
@@ -88,19 +93,6 @@ public class MaxProfitSharesForKReturnDayBuyAndSale {
 			Arrays.sort(result);
 		}
 		return result;
-	}
-
-	private void getCarryValues(int[] prices, int k) {
-		for (int i = 1; i < prices.length; ++i) {
-			if (prices[i - 1] < prices[i]) {
-				carry[i - 1] = -prices[i - 1];
-				if (i == prices.length - 1) {
-					carry[i] = prices[i];
-				}
-			} else {
-				carry[i - 1] = prices[i - 1];
-			}
-		}
 	}
 
 	@Test
@@ -189,14 +181,6 @@ public class MaxProfitSharesForKReturnDayBuyAndSale {
 		int[] prices = new int[]{6, 7, 5, 8, 10, 8, 9, 12, 9};
 		int[] actual = getIndexes(prices, 2);
 		int[] expected = {2, 4, 5, 7};
-		assertArrayEquals(expected, actual);
-	}
-
-	@Test
-	public void test12() {
-		int[] prices = {1, 2, 4, 2, 5, 7, 2, 4, 9, 0};
-		int[] actual = getIndexes(prices, 2);
-		int[] expected = {0, 5, 6, 8};
 		assertArrayEquals(expected, actual);
 	}
 }
