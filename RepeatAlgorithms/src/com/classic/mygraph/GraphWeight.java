@@ -15,13 +15,15 @@ public class GraphWeight<T> {
 	public GraphWeight(Map<T, LinkedList<Node<T>>> adjacent) {
 		this.map = adjacent;
 		this.numberVertices = adjacent.size();
+		this.pQue = new PriorityQueue<Node<T>>(this.numberVertices,
+				new Node<T>());
 	}
 
 	private Map<T, LinkedList<Node<T>>> map = new HashMap<T, LinkedList<Node<T>>>();
 	private LinkedList<T> cache = new LinkedList<T>();
 
 	private int numberVertices = 0;
-	private PriorityQueue<Node<T>> pQue = new PriorityQueue<Node<T>>();
+	private PriorityQueue<Node<T>> pQue;
 	private Set<T> keyVertices = new HashSet<T>();
 	private Map<T, Integer> distances = new HashMap<T, Integer>();
 
@@ -66,11 +68,14 @@ public class GraphWeight<T> {
 
 	public LinkedList<T> BFS(T source) {
 		if (map.containsKey(source)) {
+
 			LinkedList<T> result = new LinkedList<T>();
 			result.add(source);
 			LinkedList<T> carry = new LinkedList<T>();
+
 			map.get(source).forEach(node -> carry.add(node.getNode()));
 			result.addAll(carry);
+
 			while (!carry.isEmpty()) {
 				T currentV = carry.pop();
 				Iterator<Node<T>> item = map.get(currentV).iterator();
@@ -89,7 +94,6 @@ public class GraphWeight<T> {
 
 	public Map<T, Integer> dijkstra(T source) {
 		if (map.containsKey(source)) {
-			cache.clear();
 			distances.clear();
 
 			DFS(source);
