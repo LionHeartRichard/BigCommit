@@ -42,7 +42,7 @@ public class MinMutation {
 					String reference = bank[j];
 					if (set.contains(reference))
 						continue;
-					if (isValid(current, reference)) {
+					if (isValid(reference, current)) {
 						set.add(reference);
 						carry.add(reference);
 					}

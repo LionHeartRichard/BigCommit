@@ -28,13 +28,13 @@ public class TimSorted {
 	}
 
 	private void insertionSorted(int[] arr, int begin, int n) {
-		for (int i = 0; i < n; ++i) {
-			int carry = arr[i];
+		for (int i = begin; i < n; ++i) {
+			int temp = arr[i];
 			int j = i - 1;
-			while (j >= 0 && arr[j] > carry) {
+			while (j >= begin && arr[j] > temp) {
 				arr[j + 1] = arr[j--];
 			}
-			arr[++j] = carry;
+			arr[++j] = temp;
 		}
 	}
 
