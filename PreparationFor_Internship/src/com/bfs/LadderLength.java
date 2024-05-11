@@ -14,75 +14,68 @@ import org.junit.jupiter.api.Test;
 
 public class LadderLength {
 
-	private String endWord;
 	private Set<String> cache;
 
 	public int ladderLength(String begin, String end, List<String> wordList) {
-
-		Set<String> primarySource = new HashSet<String>(wordList);
-		if (!primarySource.contains(end))
+		Set<String> primary = new HashSet<String>(wordList);
+		if (!primary.contains(end)) {
 			return 0;
-
-		endWord = end;
+		}
 
 		cache = new HashSet<String>();
-		cache.add(begin);
-		primarySource.remove(begin);
 
-		BFS(begin, primarySource);
+		primary.remove(begin);
+		primary.remove(end);
 
-		if (cache.contains(endWord))
+		BFS(begin, primary, end);
+
+		if (cache.size() != 0)
 			return cache.size();
 		return 0;
-
 	}
 
-	private void BFS(String current, Set<String> primarySource) {
-		if (primarySource.size() == 0)
+	private void BFS(String current, Set<String> primary, String source) {
+
+		if (cache.contains(source))
 			return;
-		if (current.equals(endWord))
+
+		if (cache.contains(current))
 			return;
-		if (isValid(current)) {
-			cache.add(endWord);
+		cache.add(current);
+
+		if (isValid(source, current)) {
+			cache.add(source);
 			return;
 		}
 
-		String reference = getValidWord(current, primarySource);
-		if (reference != null) {
-			cache.add(reference);
-			primarySource.remove(reference);
-			BFS(reference, primarySource);
+		current = getValidStr(current, primary);
+		if (current != null) {
+			primary.remove(current);
+			BFS(current, primary, source);
 		}
 	}
 
-	private boolean isValid(String current) {
+	private String getValidStr(String actual, Set<String> primary) {
+		Set<String> temp = new HashSet<String>();
+		temp.addAll(primary);
+		for (String expected : primary) {
+			if (isValid(expected, actual)) {// проверка дополнительная на более
+											// короткий путь до последнего звена
+				return expected;
+			}
+		}
+		return null;
+	}
+
+	private boolean isValid(String reference, String current) {
 		int count = 0;
-
-		for (int i = 0; i < current.length(); ++i) {
-			if (endWord.charAt(i) != current.charAt(i))
+		for (int i = 0; i < reference.length(); ++i) {
+			if (reference.charAt(i) != current.charAt(i))
 				++count;
 			if (count > 1)
 				return false;
 		}
-
-		if (count == 1)
-			return true;
-		return false;
-	}
-
-	private String getValidWord(String word, Set<String> primarySource) {
-		for (String reference : primarySource) {
-			int count = 0;
-			for (int i = 0; i < reference.length(); ++i) {
-				if (reference.charAt(i) != word.charAt(i))
-					++count;
-				if (count > 1)
-					break;
-			}
-			if (count == 1)
-				return reference;
-		}
-		return null;
+		return true;
 	}
 
 	@Test
@@ -112,7 +105,7 @@ public class LadderLength {
 	@Test
 	public void test3() {
 		String beginWord = "a", endWord = "c";
-		List<String> wordList = Arrays.asList("a", "b", "c");
+		List<String> wordList = Arrays.asList("a", "i", "y", "b", "c");
 		int actual = ladderLength(beginWord, endWord, wordList);
 		assertEquals(2, actual);
 	}

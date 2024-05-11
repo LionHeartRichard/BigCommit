@@ -33,7 +33,6 @@ public class LadderLengthTopSolution {
 			for (int i = 0; i < word.length; ++i) {
 				for (int ch = 97; ch <= 122; ++ch) {// перебираю английский
 													// алфовит
-
 					char origin = word[i];
 					word[i] = (char) ch;
 					String target = String.valueOf(word);
@@ -64,6 +63,9 @@ public class LadderLengthTopSolution {
 		String beginWord = "hit", endWord = "cog";
 		List<String> wordList = Arrays.asList("hot", "dot", "dog", "lot", "log",
 				"cog");
+
+		// "hit" -> "hot" -> "dot" -> "dog" -> "cog"
+
 		int actual = ladderLength(beginWord, endWord, wordList);
 		assertEquals(5, actual);
 
@@ -77,5 +79,22 @@ public class LadderLengthTopSolution {
 				"log");
 		int actual = ladderLength(beginWord, endWord, wordList);
 		assertEquals(0, actual);
+	}
+
+	@Test
+	public void test3() {
+		String beginWord = "a", endWord = "c";
+		List<String> wordList = Arrays.asList("a", "i", "y", "b", "c");
+		int actual = ladderLength(beginWord, endWord, wordList);
+		assertEquals(2, actual);
+	}
+
+	@Test
+	public void test4() {
+		String beginWord = "hot", endWord = "dog";
+		List<String> wordList = Arrays.asList("hot", "dog", "cog", "pot",
+				"dot");
+		int actual = ladderLength(beginWord, endWord, wordList);
+		assertEquals(3, actual);
 	}
 }
