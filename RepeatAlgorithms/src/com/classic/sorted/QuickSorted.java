@@ -51,4 +51,22 @@ public class QuickSorted {
 		quickSorted(actual, 0, actual.length - 1);
 		assertArrayEquals(expected, actual);
 	}
+
+	@Test
+	public void test3() {
+		int[] actual = {1, 2, 8, 15};
+		int[] expected = {1, 2, 8, 15};
+		Arrays.sort(expected);
+		quickSorted(actual, 0, actual.length - 1);
+		assertArrayEquals(expected, actual);
+	}
+
+	@Test
+	public void test4() {
+		int[] actual = {1, 2, 3, 2, 2, 4, 5};
+		int[] expected = {1, 2, 3, 2, 2, 4, 5};
+		Arrays.sort(expected);
+		quickSorted(actual, 0, actual.length - 1);
+		assertArrayEquals(expected, actual);
+	}
 }
