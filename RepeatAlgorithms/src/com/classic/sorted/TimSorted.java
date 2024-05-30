@@ -1,49 +1,54 @@
 package com.classic.sorted;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.Assert.assertArrayEquals;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.Arrays;
-
 import org.junit.jupiter.api.Test;
 
 public class TimSorted {
 
-	private static final int RUN = 32;
-
-	public void timSorted(int[] arr, int n) {
-
-		for (int i = 0; i < n; i += RUN) {
-			insertionSorted(arr, i, Math.min(i + RUN, n));
-		}
-
-		int begin = 0;
-		for (int size = RUN; size < n; size *= 2) {
-			int mid = begin + RUN;
-			int sizeN = Math.min(size + RUN, n);
-			if (mid < sizeN) {
-				merge(arr, begin, mid, sizeN);
-			}
-			begin = size;
-		}
-	}
+	private String fileName = "/home/kein/Doc/data_for_algorithm/BigArray.txt";
+	private static final int THRESHOLD = 32;
 
 	private void insertionSorted(int[] arr, int begin, int n) {
-		for (int i = begin; i < n; ++i) {
-			int temp = arr[i];
-			int j = i - 1;
-			while (j >= begin && arr[j] > temp) {
+		int i, j, temp;
+		for (i = begin + 1; i < n; ++i) {
+			temp = arr[i];
+			j = i - 1;
+			while (j >= begin && arr[j] >= temp) {
 				arr[j + 1] = arr[j--];
 			}
 			arr[++j] = temp;
 		}
 	}
 
-	private void merge(int[] arr, int begin, int mid, int endN) {
+	public void timSorted(int[] arr) {
+		int n = arr.length;
+		for (int i = 0; i < n; i += THRESHOLD) {
+			insertionSorted(arr, i, Math.min(i + THRESHOLD, n));
+		}
 
-		int i = 0, j = 0, k = begin;
+		for (int size = THRESHOLD; size < n; size *= 2) {
+			for (int begin = 0; begin < n; begin += size * 2) {
 
-		int n1 = mid - begin;
-		int n2 = endN - mid;
+				int mid = begin + size - 1;
+				int end = Math.min(begin + size * 2 - 1, n - 1);
+
+				if (mid < end) {
+					merge(arr, begin, mid, end);
+				}
+			}
+		}
+
+	}
+
+	private void merge(int[] arr, int begin, int mid, int end) {
+		int i, j, k;
+
+		int n1 = mid - begin + 1;
+		int n2 = end - mid;
 
 		int[] left = new int[n1];
 		int[] right = new int[n2];
@@ -52,10 +57,12 @@ public class TimSorted {
 			left[i] = arr[begin + i];
 		}
 		for (j = 0; j < n2; ++j) {
-			right[j] = arr[mid + j];
+			right[j] = arr[mid + 1 + j];
 		}
+
 		i = 0;
 		j = 0;
+		k = begin;
 
 		while (i < n1 && j < n2) {
 			if (left[i] <= right[j]) {
@@ -71,7 +78,6 @@ public class TimSorted {
 		while (j < n2) {
 			arr[k++] = right[j++];
 		}
-
 	}
 
 	@Test
@@ -82,7 +88,7 @@ public class TimSorted {
 		int[] expected = Arrays.copyOf(actual, actual.length);
 		Arrays.sort(expected);
 
-		timSorted(actual, actual.length);
+		timSorted(actual);
 
 		assertArrayEquals(expected, actual);
 	}
@@ -91,7 +97,7 @@ public class TimSorted {
 	public void test2() {
 		int[] actual = {5, 1, 6, 2, 3, 4};
 		int[] expected = {1, 2, 3, 4, 5, 6};
-		timSorted(actual, actual.length);
+		timSorted(actual);
 		assertArrayEquals(expected, actual);
 	}
 
@@ -107,7 +113,26 @@ public class TimSorted {
 				3, 4, 5, 1, 6, 2, 3, 4, 5, 1, 6, 2, 3, 4, 5, 1, 6, 2, 3, 4};
 		int[] expected = Arrays.copyOf(actual, actual.length);
 		Arrays.sort(expected);
-		timSorted(actual, actual.length);
+		timSorted(actual);
 		assertArrayEquals(expected, actual);
+	}
+
+	@Test
+	public void testBigArray() throws Exception {
+		BufferedReader reader = new BufferedReader(new FileReader(fileName));
+		String str = reader.readLine();
+		reader.close();
+		String[] arrayStr = str.split(",");
+		int[] arr = new int[arrayStr.length];
+		for (int i = 0; i < arr.length; ++i) {
+			arr[i] = Integer.parseInt(arrayStr[i]);
+		}
+
+		timSorted(arr);
+
+		int[] expected = Arrays.copyOf(arr, arr.length);
+		Arrays.sort(expected);
+		assertArrayEquals(expected, arr);
+
 	}
 }
