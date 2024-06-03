@@ -276,6 +276,23 @@ public class AllAlgorithmsSorted {
 	}
 
 	@Test
+	public void testTimeReadAndWriteArray() throws Exception {
+		BufferedReader reader = new BufferedReader(new FileReader(fileName));
+		String str = reader.readLine();
+		reader.close();
+		String[] arrayStr = str.split(",");
+		int[] arr = new int[arrayStr.length];
+		for (int i = 0; i < arr.length; ++i) {
+			arr[i] = Integer.parseInt(arrayStr[i]);
+		}
+
+		int[] expected = Arrays.copyOf(arr, arr.length);
+		Arrays.sort(expected);
+		assertArrayEquals(expected, expected);
+
+	}
+
+	@Test
 	public void testTimSortedThreads() throws Exception {
 		BufferedReader reader = new BufferedReader(new FileReader(fileName));
 		String str = reader.readLine();
