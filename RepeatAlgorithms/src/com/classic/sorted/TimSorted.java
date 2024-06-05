@@ -17,7 +17,7 @@ public class TimSorted {
 		for (i = begin + 1; i < n; ++i) {
 			temp = arr[i];
 			j = i - 1;
-			while (j >= begin && arr[j] >= temp) {
+			while (j >= begin && arr[j] > temp) {
 				arr[j + 1] = arr[j--];
 			}
 			arr[++j] = temp;

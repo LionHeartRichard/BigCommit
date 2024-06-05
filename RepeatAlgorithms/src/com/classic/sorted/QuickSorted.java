@@ -21,8 +21,8 @@ public class QuickSorted {
 		int pivot = arr[end];
 		int i = begin;
 
-		for (int j = begin; j < end; ++j) {
-			if (arr[j] <= pivot) {
+		for (int j = begin; j <= end - 1; ++j) {
+			if (arr[j] < pivot) {
 				int temp = arr[i];
 				arr[i++] = arr[j];
 				arr[j] = temp;
