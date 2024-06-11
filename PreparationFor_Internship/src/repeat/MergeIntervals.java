@@ -1,30 +1,32 @@
-package com.intervals;
+package repeat;
 
 import static org.junit.Assert.assertArrayEquals;
 
-import java.util.*;
-
 import org.junit.jupiter.api.Test;
 
-public class MergeIntervalsArraysSort {
+import java.util.*;
+
+public class MergeIntervals {
 
 	public int[][] merge(int[][] arr) {
 		int n = arr.length;
-		int[] begins = new int[n];
-		int[] ends = new int[n];
+		int[] forward = new int[n];
+		int[] backward = new int[n];
+		for (int i = 0; i < n; ++i) {
+			forward[i] = arr[i][0];
+			backward[i] = arr[i][1];
+		}
 
+		Arrays.sort(forward);
+		Arrays.sort(backward);
 		for (int i = 0; i < n; ++i) {
-			begins[i] = arr[i][0];
-			ends[i] = arr[i][1];
+			arr[i][0] = forward[i];
+			arr[i][1] = backward[i];
 		}
-		Arrays.sort(begins);
-		Arrays.sort(ends);
-		for (int i = 0; i < n; ++i) {
-			arr[i][0] = begins[i];
-			arr[i][1] = ends[i];
-		}
-		Set<Integer> set = new HashSet<Integer>();
+
 		int j = 0;
+		Set<Integer> set = new HashSet<Integer>();
+
 		for (int i = 1; i < n; ++i) {
 			if (arr[j][1] >= arr[i][0]) {
 				arr[j][1] = arr[i][1];
@@ -34,16 +36,16 @@ public class MergeIntervalsArraysSort {
 			}
 		}
 
-		int[][] res = new int[n - set.size()][2];
 		j = 0;
+		int[][] result = new int[n - set.size()][2];
 		for (int i = 0; i < n; ++i) {
 			if (!set.contains(i)) {
-				res[j][0] = arr[i][0];
-				res[j++][1] = arr[i][1];
+				result[j][0] = arr[i][0];
+				result[j++][1] = arr[i][1];
 			}
 		}
-		return res;
 
+		return result;
 	}
 
 	@Test
@@ -121,6 +123,16 @@ public class MergeIntervalsArraysSort {
 		int[][] inttervals = {{2, 3}, {2, 2}, {3, 3}, {1, 3}, {5, 7}, {2, 2},
 				{4, 6}};
 		int[][] expexted = {{1, 3}, {4, 7}};
+		int[][] actual = merge(inttervals);
+		assertArrayEquals(expexted, actual);
+	}
+
+	@Test
+	public void test10() {
+
+		int[][] inttervals = {{30, 56}, {2, 3}, {2, 19}, {3, 3}, {1, 10},
+				{5, 7}, {2, 2}, {4, 6}};
+		int[][] expexted = {{1, 19}, {30, 56}};
 		int[][] actual = merge(inttervals);
 		assertArrayEquals(expexted, actual);
 	}

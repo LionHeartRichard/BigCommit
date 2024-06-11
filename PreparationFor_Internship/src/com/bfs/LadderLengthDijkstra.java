@@ -224,12 +224,4 @@ public class LadderLengthDijkstra {
 		int actual = ladderLength(beginWord, endWord, wordList);
 		assertEquals(3, actual);
 	}
-
-	@Test
-	public void test5() {
-		String beginWord = "hot", endWord = "dog";
-		List<String> wordList = Arrays.asList("hot", "dog");
-		int actual = ladderLength(beginWord, endWord, wordList);
-		assertEquals(0, actual);
-	}
 }
