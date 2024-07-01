@@ -23,49 +23,36 @@ import org.junit.jupiter.api.Test;
 
 public class MinMutation {
 
-	public int minMutation(String startGene, String endGene, String[] bank) {
+	public int minMutation(String start, String end, String[] bank) {
+
+		int n = bank.length;
+		int mask = 0;
 		int steps = 0;
-		Set<String> set = new HashSet<>();
-		LinkedList<String> carry = new LinkedList<>();
-		set.add(startGene);
-		carry.add(startGene);
-
-		while (!carry.isEmpty()) {
-
-			int size = carry.size();
-			for (int i = 1; i <= size; ++i) {
-
-				String current = carry.remove();
-
-				if (current.equals(endGene))
+		Queue<Integer> qq = new LinkedList<>();
+		qq.add(-1);
+		while (!qq.isEmpty()) {
+			int size = qq.size();
+			while (size-- > 0) {
+				int front = qq.poll();
+				String str = front == -1 ? start : bank[front];
+				if (str.equals(end))
 					return steps;
-
-				for (int j = 0; j < bank.length; ++j) {
-					String reference = bank[j];
-					if (set.contains(reference))
+				for (int i = 0; i < n; i++) {
+					if (((mask >> i) & 1) == 1)
 						continue;
-					if (isValid(current, reference)) {
-						set.add(reference);
-						carry.add(reference);						
+					int cnt = 0;
+					for (int ii = 0; ii < 8; ii++)
+						if (str.charAt(ii) != bank[i].charAt(ii))
+							cnt++;
+					if (cnt == 1) {
+						qq.add(i);
+						mask |= (1 << i);
 					}
 				}
 			}
-			++steps;
-
+			steps++;
 		}
-
 		return -1;
-	}
-
-	public boolean isValid(String current, String reference) {
-		int count = 0;
-		for (int i = 0; i < 8; ++i) {
-			if (current.charAt(i) != reference.charAt(i))
-				++count;
-		}
-		if (count == 1)
-			return true;
-		return false;
 	}
 
 	@Test

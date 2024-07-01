@@ -1,4 +1,4 @@
-package com.tasks.isaev.recursive;
+package repeat.recursion;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,19 +11,18 @@ import org.junit.jupiter.api.Test;
  * Вы можете предположить, что все четыре края сетки окружены водой.
  */
 
-public class NumbersIslands {
+public class CountIslands {
 
-	private int rows, columns;
-	private int count = 0;
-
+	private int count = 0, rows = 0, columns = 0;
 	public int numIslands(char[][] grid) {
 		rows = grid.length;
 		columns = grid[0].length;
+		if (rows == 0 || columns == 0)
+			return 0;
 
 		for (int i = 0; i < rows; ++i) {
 			check(grid, i);
 		}
-
 		return count;
 	}
 
@@ -43,16 +42,13 @@ public class NumbersIslands {
 
 		if (i > 0 && grid[i - 1][j] == '1')
 			backtracking(grid, i - 1, j);
-
 		if (i + 1 < rows && grid[i + 1][j] == '1')
 			backtracking(grid, i + 1, j);
 
 		if (j > 0 && grid[i][j - 1] == '1')
 			backtracking(grid, i, j - 1);
-
 		if (j + 1 < columns && grid[i][j + 1] == '1')
 			backtracking(grid, i, j + 1);
-
 	}
 
 	@Test

@@ -5,6 +5,7 @@ import java.util.*;
 public class ClassicBacktracking {
 
 	public static void main(String[] args) {
+		
 		String strCombination = "1!b";
 		List<String> output = new ArrayList<String>();
 		output = combination(strCombination);
