@@ -7,57 +7,61 @@ import java.util.*;
 
 public class BasicCalculator {
 
-	private int num = 0;
-
 	public int calculate(String s) {
 		return backtracking(s, 0)[0];
 	}
 
 	private int[] backtracking(String s, int begin) {
-		int i = begin;
+
 		char sign = '+';
 
-		Deque<Integer> nums = new ArrayDeque<Integer>();
+		int num = 0, i = begin;
+
+		Deque<Integer> numbers = new ArrayDeque<Integer>();
 
 		for (i = begin; i < s.length(); ++i) {
 			char token = s.charAt(i);
+
 			if (token == '(') {
 				int[] temp = backtracking(s, i + 1);
 				num = temp[0];
 				i = temp[1];
 			}
+
 			if (Character.isDigit(token)) {
 				num = num * 10 + (token - '0');
 			}
+
 			if ((!Character.isDigit(token) && token != ' ')
 					|| i == s.length() - 1) {
+
 				switch (sign) {
 					case '+' :
-						nums.offerLast(num);
+						numbers.offerLast(num);
 						break;
 					case '-' :
-						nums.offerLast(-num);
-						break;
-					case '/' :
-						nums.offerLast(nums.pollLast() / num);
+						numbers.offerLast(-num);
 						break;
 					case '*' :
-						nums.offerLast(nums.pollLast() * num);
+						numbers.offerLast(numbers.pollLast() * num);
+						break;
+					case '/' :
+						numbers.offerLast(numbers.pollLast() / num);
 						break;
 				}
 				sign = token;
 				num = 0;
 			}
-			if (token == ')') {
+
+			if (token == ')')
 				break;
-			}
 		}
 
-		int result = 0;
-		while (!nums.isEmpty()) {
-			result += nums.pollLast();
+		int res = 0;
+		while (numbers.size() != 0) {
+			res += numbers.pollFirst();
 		}
-		return new int[]{result, i};
+		return new int[]{res, i};
 	}
 
 	@Test

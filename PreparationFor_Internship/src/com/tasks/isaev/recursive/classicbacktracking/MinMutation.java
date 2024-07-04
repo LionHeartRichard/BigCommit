@@ -23,34 +23,44 @@ import org.junit.jupiter.api.Test;
 
 public class MinMutation {
 
-	public int minMutation(String start, String end, String[] bank) {
+	public int minMutation(String begin, String end, String[] bank) {
 
 		int n = bank.length;
 		int mask = 0;
 		int steps = 0;
-		Queue<Integer> qq = new LinkedList<>();
-		qq.add(-1);
-		while (!qq.isEmpty()) {
-			int size = qq.size();
+
+		Queue<Integer> que = new LinkedList<>();
+		que.add(-1);
+
+		while (!que.isEmpty()) {
+			int size = que.size();
+
 			while (size-- > 0) {
-				int front = qq.poll();
-				String str = front == -1 ? start : bank[front];
+				
+				int front = que.poll();
+				
+				String str = front == -1 ? begin : bank[front];
 				if (str.equals(end))
 					return steps;
-				for (int i = 0; i < n; i++) {
+
+				for (int i = 0; i < n; ++i) {
+
 					if (((mask >> i) & 1) == 1)
 						continue;
-					int cnt = 0;
-					for (int ii = 0; ii < 8; ii++)
-						if (str.charAt(ii) != bank[i].charAt(ii))
-							cnt++;
-					if (cnt == 1) {
-						qq.add(i);
+
+					int count = 0;
+
+					for (int j = 0; j < 8; ++j)
+						if (str.charAt(j) != bank[i].charAt(j))
+							++count;
+
+					if (count == 1) {
+						que.add(i);
 						mask |= (1 << i);
 					}
 				}
 			}
-			steps++;
+			++steps;
 		}
 		return -1;
 	}

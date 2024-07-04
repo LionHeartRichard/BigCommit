@@ -23,13 +23,13 @@ public class MinMutation {
 	 */
 
 	public int minMutation(String begin, String end, String[] bank) {
-
 		Set<String> primary = new HashSet<>(Arrays.asList(bank));
-		if (!primary.contains(end))
+		if (!primary.contains(end)) {
 			return -1;
+		}
 
-		Set<String> forward = new HashSet<>();
-		Set<String> backward = new HashSet<>();
+		Set<String> forward = new HashSet<String>();
+		Set<String> backward = new HashSet<String>();
 		forward.add(begin);
 		backward.add(end);
 
@@ -42,14 +42,14 @@ public class MinMutation {
 	private int transform(Set<String> forward, Set<String> backward,
 			Set<String> primary) {
 
-		Set<String> carry = new HashSet<>();
+		Set<String> carry = new HashSet<String>();
 		for (String fs : forward) {
 			char[] word = fs.toCharArray();
 			for (int i = 0; i < word.length; ++i) {
 				for (char ch = 'A'; ch <= 'Z'; ++ch) {
 
 					char temp = word[i];
-					word[i] = ch;
+					word[i] = (char) ch;
 					String target = String.valueOf(word);
 
 					if (backward.contains(target))
@@ -72,7 +72,6 @@ public class MinMutation {
 		int result = forward.size() > backward.size()
 				? transform(backward, forward, primary)
 				: transform(forward, backward, primary);
-
 		return result == -1 ? -1 : result + 1;
 	}
 
